@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <head>
+    <title>客户信息编辑页面</title>
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<link rel="stylesheet" href="">
+	<script type="text/javascript">
+
+	$(function(){
+    $('#send').click(function(){
+        $.ajax({
+			type: "GET",
+			url: "http://192.168.1.8:8080/onlineNewsPlatform/news/count",
+			dataType: "json",
+			success: function(data){
+                         $('#resText').empty();   //清空resText里面的所有内容
+                         
+                         alert('文章数量：'+ data.data  +'状态：'+data.message);
+                         document.getElementById("number").innerHTML=data.data;
+                         document.getElementById("username").innerHTML=data.message;
+                         document.getElementById("content").innerHTML=data.success;
+                      }
+            });
+        });
+    });
+	</script>
+    <script>
+    
+        function insRow(){
+            var rowNums = document.getElementById("myTable").rows.length;
+            alert(rowNums);
+            var irow = document.getElementById("myTable").insertRow(rowNums);
+            var cell0 = irow.insertCell(0);
+            var cell1 = irow.insertCell(1);
+            var cell2 = irow.insertCell(2);
+            var cell3 = irow.insertCell(3);
+            var cell4 = irow.insertCell(4);
+            var cell5 = irow.insertCell(5);
+            var cell6 = irow.insertCell(6);
+            var cell7 = irow.insertCell(7);
+            cell0.innerHTML="<input type='text' name='clients["+rowNums+"].number'/>";
+            cell1.innerHTML="<input type='text' name='clients["+rowNums+"].code'/>";
+            cell2.innerHTML="<input type='text' name='clients["+rowNums+"].name'/>";
+            cell3.innerHTML="<input type='text' name='clients["+rowNums+"].address'/>";
+            cell4.innerHTML="<input type='text' name='clients["+rowNums+"].tel'/>";
+            cell5.innerHTML="<input type='text' name='clients["+rowNums+"].mail'/>";
+            cell6.innerHTML="<input type='text' name='clients["+rowNums+"].people'/>";
+            cell7.innerHTML="<input type='text' name='clients["+rowNums+"].people'/>";
+    
+        }
+        
+        function delRow(){
+            var rowNums = document.getElementById("myTable").rows.length;
+            var dRow = document.getElementById("myTable").deleteRow(rowNums-1);    
+        }
+        var 
+        
+    </script>
+  </head>
+  <body>
+      学生信息
+  <form action="handleStudentInfo" method="post" name="studentForm" >
+  <table id="myTable" border="1" cellspacing="0">
+    <tr>
+        <th>序号</th>
+		<th>编码</th>
+		<th>名称</th>
+		<th>地址</th>
+		<th>电话</th>
+		<th>邮箱</th>
+		<th>联系人</th>
+		<th>客户类别</th>
+    </tr>
+    <tr>
+        <td><input type="text" id="number" name="clients[0].number" value="1" /></td>
+		<td><input type="text" id="code" name="clients[0].code" value="C001" /></td>
+		<td><input type="text" id="name" name="clients[0].name" value="客户一" /></td>
+		<td><input type="text" id="address" name="clients[0].address" value="安徽合肥" /></td>
+		<td><input type="text" id="tel" name="clients[0].tel" value="18326047235" /></td>
+		<td><input type="text" id="mail" name="clients[0].mail" value="15646848@163.com" /></td>
+		<td><input type="text" id="people" name="clients[0].people" value="联系人" /></td>
+		<td><input type="text" id="classify" name="clients[0].classify" value="客户类别" /></td>
+     </tr>
+     <tr>
+        <td><input type="text" id="number" name="clients[1].number" value="2" /></td>
+		<td><input type="text" id="code" name="clients[1].code" value="C002" /></td>
+		<td><input type="text" id="name" name="clients[1].name" value="客户二" /></td>
+		<td><input type="text" id="address" name="clients[1].address" value="安徽合肥" /></td>
+		<td><input type="text" id="tel" name="clients[1].tel" value="18326047235" /></td>
+		<td><input type="text" id="mail" name="clients[1].mail" value="15646848@163.com" /></td>
+		<td><input type="text" id="people" name="clients[1].people" value="联系人" /></td>
+		<td><input type="text" id="classify" name="clients[1].classify" value="客户类别" /></td>
+        <!--<td><input type="text" name="students[1].name" value="ls"/></td>
+        <td><input type="text" name="students[1].no" value="2251"/></td>
+        <td><input type="text" name="students[1].classname" value="网络工程"/></td>
+        <td><input type="text" name="students[1].score" value="89"/></td>
+        <td><input type="text" name="students[1].sex" value="男"/></td>-->
+      </tr>
+  </table>
+  <br/>
+
+  <input type="button" value="增加行" onclick="insRow()"/>
+  <input type="button" value="删除行" onclick="delRow()"/>
+  <input type="button" id="send" value="点击获取"> 
+  <br/>
+  
+  <input type="submit" value="提交"/>
+  </form>
+  
+  </body>
+</html>

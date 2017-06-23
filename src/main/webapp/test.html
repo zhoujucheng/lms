@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <button id="test">test</button>
+</body>
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function (){
+        $('#test').click(function () {
+            $.ajax({
+                type: "POST",
+                url: "http://192.168.1.70:8080/lms/user/login",
+                data："userName:qwe,pwd:123465"
+            },)
+        });
+    });
+</script>
+</html>

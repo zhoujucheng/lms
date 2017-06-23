@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<link rel="stylesheet" href="">
+	<script type="text/javascript">
+
+	$(function(){
+    $('#send').click(function(){
+        $.ajax({
+			type: "GET",
+			url: "http://192.168.1.8:8080/onlineNewsPlatform/news/count",
+			dataType: "json",
+			success: function(data){
+                         $('#resText').empty();   //清空resText里面的所有内容
+                         
+                         alert('文章数量：'+ data.data  +'状态：'+data.message);
+                         document.getElementById("resText").innerHTML=data.data;
+                         document.getElementById("username").innerHTML=data.message;
+                         document.getElementById("content").innerHTML=data.success;
+                      }
+            });
+        });
+    });
+	</script>
+</head>
+<body>
+	
+	<table border="1">
+		<caption><input type="button" id="send" value="点击获取"></caption>
+		<thead>
+			<tr>
+				<th >1</th>
+				<th >2</th>
+				<th >3</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td id="resText">data</td>
+				<td id="username">data</td>
+				<td id="content">data</td>
+			</tr>
+		</tbody>
+	</table>
+	
+</body>
+
+</html>

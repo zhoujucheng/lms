@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <head>
+    <title>学生信息提交页面</title>
+    <script>
+    
+        function insRow(){
+            var rowNums = document.getElementById("myTable").rows.length;
+            alert(rowNums);
+            var irow = document.getElementById("myTable").insertRow(rowNums);
+            var cell0 = irow.insertCell(0);
+            var cell1 = irow.insertCell(1);
+            var cell2 = irow.insertCell(2);
+            var cell3 = irow.insertCell(3);
+            var cell4 = irow.insertCell(4);
+            cell0.innerHTML="<input type='text' name='students["+rowNums+"].name'/>";
+            cell1.innerHTML="<input type='text' name='students["+rowNums+"].no'/>";
+            cell2.innerHTML="<input type='text' name='students["+rowNums+"].classname'/>";
+            cell3.innerHTML="<input type='text' name='students["+rowNums+"].score'/>";
+            cell4.innerHTML="<input type='text' name='students["+rowNums+"].sex'/>";
+    
+        }
+        
+        function delRow(){
+            var rowNums = document.getElementById("myTable").rows.length;
+            var dRow = document.getElementById("myTable").deleteRow(rowNums-1);    
+        }
+        
+        
+    </script>
+  </head>
+  <body>
+      学生信息
+  <form action="handleStudentInfo" method="post" name="studentForm" >
+  <table id="myTable" border="1" cellspacing="0">
+    <tr>
+        <td>姓名</td>
+        <td>学号</td>
+        <td>班级</td>
+        <td>成绩</td>
+        <td>性别</td>
+    </tr>
+      <tr>
+          <td><input type="text" name="students[0].name" value="zs"/></td>
+        <td><input type="text" name="students[0].no" value="2250"/></td>
+        <td><input type="text" name="students[0].classname" value="电子商务"/></td>
+        <td><input type="text" name="students[0].score" value="93"/></td>
+        <td><input type="text" name="students[0].sex" value="男"/></td>
+      </tr>
+      <tr>
+          <td><input type="text" name="students[1].name" value="ls"/></td>
+        <td><input type="text" name="students[1].no" value="2251"/></td>
+        <td><input type="text" name="students[1].classname" value="网络工程"/></td>
+        <td><input type="text" name="students[1].score" value="89"/></td>
+        <td><input type="text" name="students[1].sex" value="男"/></td>
+      </tr>
+  </table>
+  <br/>
+
+  <input type="button" value="增加行" onclick="insRow()"/>
+  <input type="button" value="删除行" onclick="delRow()"/>
+  
+  <br/>
+  <br/>
+  
+  <input type="submit" value="提交"/>
+  </form>
+  
+  </body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>供应商资料提交页面</title>
+	<link rel="stylesheet" href="">
+	<style type="text/css" media="screen">
+		body,table{ 
+			font-size:18px; 
+		} 
+		table{ 
+			table-layout:fixed; 
+			empty-cells:show; 
+			border-collapse: collapse; 
+			margin:0 auto; 
+			border:1px solid #cad9ea; 
+			color:#666; 
+		} 
+		th {
+			background-repeat:repeat-x; 
+			height:30px; 
+			border:1px solid #cad9ea; 
+			padding:0 1em 0; 
+		}
+		td {
+			border:1px solid #cad9ea; 
+			padding:0 1em 0; 
+		}
+		input {
+			
+		}
+	</style>
+	<script type="text/javascript">
+		function  () {
+
+            var users;
+            users = { 
+				"number":'1',
+				"code":'C001',
+				"name":'供应商一',
+				"address":'安徽合肥',
+				"email":'952710153@qq.com',
+				"tel":'18326047235',
+				"people":'邹荣',
+				"classify":'水泥'
+			};
+            user.number=document.getElementById('number');
+            user.code=document.getElementById('code');
+            user.name=document.getElementById('name');
+            user.address=document.getElementById('address');
+            user.email=document.getElementById('email');
+            user.people=document.getElementById('people');
+            user.classify=document.getElementById('classify');
+        }
+        $.ajax(){
+			type:'POST',
+			data:JSON.stringify(users),
+			contentType :'application/json',
+			dataType:'json',
+			url :'',
+			success :function(data) {
+				    alert("OK");
+				},
+			error :function(e) {
+				alert("error");
+				}
+			};
+	</script>
+</head>
+<body>
+	<form action="#" method="post">
+	    <table>
+	    	<caption><h5>增加供应商资料</h5></caption>
+	    	<thead>
+	    		<tr>
+	    			<th>单位编码:</th>
+	    			<th>名&nbsp;&nbsp;&nbsp;&nbsp;称:&nbsp;&nbsp;&nbsp;</th>
+	    			<th>联系地址:</th>
+	    			<th>邮箱地址:</th>
+	    			<th>联系方式:</th>
+	    			<th>联&nbsp;系&nbsp;人:&nbsp;&nbsp;</th>
+	    			<th>供应类别:</th>
+	    			<th></th>
+	    		</tr>
+	    	</thead>
+	    	<tbody>
+	    		<tr>
+	    			<td><input type ="text " id="code" name="code" value=""></td>
+	    			<td><input type ="textarea" id="name" name="name" value=""></td>
+	    			<td><input type ="text " id="address" name="address" value=""></td>
+	    			<td><input type ="text" id="email" name="email" value=""></td>
+	    			<td><input type ="text" id="tel" name="tel" value=""></td>
+	    			<td><input type ="text" id="people" name="people" value=""></td>
+	    			<td><input type ="text" id="classify" name="classify" value=""></td>
+	    			<td><input type ="submit" name="address" value="提交资料" onclick="function()"></td>
+	    		</tr>
+	    	</tbody>
+	    </table>
+	</form>
+</body>
+</html>

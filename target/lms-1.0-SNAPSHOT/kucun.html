@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#btn').click(function(){
+    /*var oJson = {
+        
+            "IdNumber":1,
+            "Name":"草鞋",
+            "Quantity":25,
+            'Price':25,
+            "Cost":20,
+            "Classify":"鞋类"
+    };*/
+        console.log('1');
+        $.ajax({
+            type:'POST',
+            url:'good/query',
+            data:{name:$('#btn').val()},
+            dataType:'json',
+            beforeSend:LoadFunction,
+            error:erryFunction,
+            success:function (data,status) {
+                console.log('3'),
+                    $('#list').html('');
+                console.log('4');
+                $.each(data,function(key,val){});
+            },
+        })
+    function LoadFunction() {  
+        $("#list").html('加载中...');  
+        console.log('2');
+    }
+    function erryFunction() {  
+        alert("商品不存在，请重试！");  
+    }
+
+    function succFunc(oJson,status) {
+        console.log('3'),
+            $('#list').html('');
+        console.log('4');
+        $.each(oJson,function(key,val){
+            console.log("obj:"+key+"-"+val);
+            //alert(val);
+            /*var idnumber = oJson.IdNumber;
+             var name = oJson.Name;
+             var quantity = oJson.Quantity;
+             var price= oJson.Price;
+             var cost= oJson.Cost;
+             var classify= oJson.Classify;*/
+
+            // document.getElementById("#data1").innerHTML=obj.IdNumber;
+            /*html +='<li>' + number+ '&nbsp;' +name + '&nbsp;' + quantity+ '&nbsp;'  + price+ '&nbsp;' + cost+ '&nbsp;' +classify+ '</li>';  */
+            //$("#list").html($("#list").html()   + idnumber  + name   + quantity +
+            //    price +cost +classify );
+        });
+
+        console.log('5')
+    }
+    
+     
+     });    
+});
+    
+</script>
+</head>
+<body>
+    请输入商品名:<input type="text" />
+    <input type="button" value="搜索" id="btn" />
+    <ul id="list"> 
+    <!--<table border="1" bordercolor="blue" id="tab">
+        <thead>
+            <td>编码</td>
+            <td>名称</td>
+            <td>库存量</td>
+            <td>售价（元/个）</td>
+            <td>进价（元/个）</td>
+            <td>类别</td>
+        </thead>
+            <tbody>
+                <tr>
+                    <td id="data1">1</td>
+                    <td id="data2">Blue</td>
+                    <td id="data3">15</td>
+                    <td id="data4">15</td>
+                    <td id="data5">15</td>
+                    <td id="data6">15</td>
+                </tr>
+            </tbody>
+        </table>-->
+        <li></li> 
+    </ul>
+    </body>
+</html>

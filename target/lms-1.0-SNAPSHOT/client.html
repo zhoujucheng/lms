@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>客户资料展示页面</title>
+	<link rel="stylesheet" href="">
+	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+     <script>
+         $(function(data){
+            $('.btn').on('click', function(){
+                $.ajax({
+                     type: "POST", //请求的方式，也有get请求
+                     url: "http://192.168.1.8:8080/onlineNewsPlatform/news/count", //请求地址，后台提供的, 
+                     dataType: "json", //json格式，后台返回的数据为json格式的。
+                     success: function(data){
+                         var dataObj = data, //返回的result为json格式的数据
+                         con = "";
+                         $.each(dataObj, function(index, data){
+                             con += "<li>数量："+dataObj.data+"</li>";
+                             con += "<li>状态："+dataObj.message+"</li>";
+                             con += "<li>现居地："+dataObj.data+"</li>";
+                             con += "<li>岗位："+dataObj.data+"</li>";
+                         });
+                         /*console.log(con);    //可以在控制台打印一下看看，这是拼起来的标签和数据*/
+                         $("#con").html(con); //把内容入到这个div中即完成
+                     }    
+                 })
+             })
+         })
+     </script>
+	<style type="text/css" media="screen">
+		table {
+			border:solid 1px #343131;
+		}
+		th {
+			border:solid 1px #343131;
+
+		}
+		td {
+			border:solid 1px #343131;
+
+		}
+	</style>
+	 <script>
+        //增加行
+        function insRow(){
+            var rowNums = document.getElementById("myTable").rows.length;        
+            var irow = document.getElementById("myTable").insertRow(rowNums);
+            var cell0 = irow.insertCell(0);
+            var cell1 = irow.insertCell(1);
+            var cell2 = irow.insertCell(2);
+            var cell3 = irow.insertCell(3);
+            var cell4 = irow.insertCell(4);
+            var cell5 = irow.insertCell(5);
+            var cell6 = irow.insertCell(6);
+            
+            /*
+                在每个input标签中添加onchange事件，比
+                 document.getElementsByTagName("table")[0].onchange=function(){TODO....};更合适
+            */
+            cell0.innerHTML="<input type='text' name='number' onchange='changeContent()'/>";
+            cell1.innerHTML="<input type='text' name='code' onchange='changeContent()'/>";
+            cell2.innerHTML="<input type='text' name='name' onchange='changeContent()'/>";
+            cell3.innerHTML="<input type='text' name='address' onchange='changeContent()'/>";
+            cell4.innerHTML="<input type='text' name='tel' onchange='changeContent()'/>";
+            cell5.innerHTML="<input type='text' name='mail' onchange='changeContent()'/>";
+            cell6.innerHTML="<input type='text' name='people' onchange='changeContent()'/>";
+            
+        }
+        
+        //删除行
+        function delRow(){
+            var rowNums = document.getElementById("myTable").rows.length;
+            var dRow = document.getElementById("myTable").deleteRow(rowNums-1);    
+        }
+        
+    </script>
+</head>
+<body>
+    <p><a href="kehu-chaxun.html" title="">查询</a></p>
+    <input type="button" value="增加" onclick="insROw()">
+    <p><a href="" title="">导出</a></p>
+	<form action="#" method="post" name="clientForm" accept-charset="utf-8" >
+		<table id="myTable" border="1" cellspacing="0">
+			<caption>现有客户资料</caption>
+				<tr>
+					<th>序号</th>
+					<th>编码</th>
+					<th>名称</th>
+					<th>地址</th>
+					<th>电话</th>
+					<th>邮箱</th>
+					<th>联系人</th>
+					<th>客户类别</th>
+					<th>操作</th>
+					<th>删除</th>
+				</tr>
+				<tr>
+					<td><input type="text" id="number" name="number" value="1" onchange="changeContent()"/></td>
+					<td><input type="text" id="code" name="code" value="C001" onchange="changeContent()"/></td>
+					<td><input type="text" id="name" name="name" value="客户一" onchange="changeContent()"/></td>
+					<td><input type="text" id="address" name="address" value="安徽合肥" onchange="changeContent()"/></td>
+					<td><input type="text" id="tel" name="tel" value="18326047235" onchange="changeContent()"/></td>
+					<td><input type="text" id="mail" name="mail" value="15646848@163.com" onchange="changeContent()"/></td>
+					<td><input type="text" id="people" name="people" value="联系人" onchange="changeContent()"/></td>
+					<td><input type="text" id="classify" name="classify" value="客户类别" onchange="changeContent()"/></td>
+					<td><input type="button" value="编辑" id="btn1"></td>
+					<td><input type="button" value="删除" onclick=" delRow()" /></td>
+				</tr>
+		</table>
+	</form>
+
+	<script type="text/JavaScript">
+	
+    //页面加载完后加载changeContent()函数，目的：是为了当页面加载完后，能及时的把表单中的数据传递到隐藏域中。
+    window.onload=changeContent();
+      //内容有改动随时更新数据
+      function changeContent(){
+          //存放各个属性数组的数组
+            var arrays = new Array();
+            
+            //存放name的数组
+            var numberArray = new Array();
+            var codeArray = new Array();
+            var nameArray = new Array();
+            var addressArray = new Array();
+            var telArray  = new Array();
+            var mailArray  = new Array();
+            var peopleArray  = new Array();
+            
+            //表格的列数
+            var cellNums = document.getElementById("myTable").rows[0].cells.length;
+            
+            //表格的行数
+            var rowNums = document.getElementById("myTable").rows.length;              
+
+            //把所有的name值放到nameArray数组中
+            for(var m=1;m<rowNums;m++){
+                numberArray[m-1] = document.getElementById("myTable").rows[m].cells[0].getElementsByTagName("input")[0].value;
+            }
+            
+            //把所有的no值放到noArray数组中
+            for(var m=1;m<rowNums;m++){
+                codeArray[m-1] = document.getElementById("myTable").rows[m].cells[1].getElementsByTagName("input")[0].value;
+            }
+            
+            //把所有的classname值放到classnameArray数组中
+            for(var m=1;m<rowNums;m++){
+                nameArray[m-1] = document.getElementById("myTable").rows[m].cells[2].getElementsByTagName("input")[0].value;
+            }
+            
+            //把所有的score值放到scoreArray数组中
+            for(var m=1;m<rowNums;m++){
+                addressArray[m-1] = document.getElementById("myTable").rows[m].cells[3].getElementsByTagName("input")[0].value;
+            }
+            
+            //把所有的sex值放到sexArray数组中
+            for(var m=1;m<rowNums;m++){
+                telArray[m-1] = document.getElementById("myTable").rows[m].cells[4].getElementsByTagName("input")[0].value;
+            }  
+            for(var m=1;m<rowNums;m++){
+                mailArray[m-1] = document.getElementById("myTable").rows[m].cells[4].getElementsByTagName("input")[0].value;
+            }   
+            for(var m=1;m<rowNums;m++){
+                peopleArray[m-1] = document.getElementById("myTable").rows[m].cells[4].getElementsByTagName("input")[0].value;
+            }
+                   
+            //将数组中的数据放到json对象中
+            var data = [];
+            for(var i=0;i<numberArray.length;i++){
+                data.push({"number":numberArray[i],
+                           "code":codeArray[i],
+                           "name":nameArray[i],
+                           "address":addressArray[i],
+                           "tel":telArray[i];
+                           "mail":telArray[i];
+                           "people":telArray[i]});
+                }
+            //将json对象转为json字符串，前后台传递是以字符串的形式
+            var strdata = JSON.stringify(data);
+            //将strdata传递到html隐藏域中
+            document.getElementById("hd1").value = strdata;
+      }
+    </script>
+	<!--var data = {
+	name: 'kdk',
+	age: 12
+    }
+    var html = '<div>'+data.name+'</div><div>'+data.age+'</div>'
+    var test = document.getElementById('test')test.innerHTML = html
+	-->
+</body>
+</html>

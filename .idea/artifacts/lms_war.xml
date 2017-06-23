@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="lms:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="lms-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="lms:war exploded" />
+    </root>
+  </artifact>
+</component>
