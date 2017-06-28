@@ -1,12 +1,20 @@
 package com.dt.lms.mapper;
 
 import com.dt.lms.domain.Good;
+import com.dt.lms.domain.Order;
+import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 public interface GoodMapper {
 
-    List<Good> selectByName(String name);
+    int addOrder(Order order);
+
+    Good findGoodByName(String name);
+
+    List<Good> searchByName(String name);
 
     int deleteByPrimaryKey(Integer id);
 

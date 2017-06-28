@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>新产品信息录入</title>
+	<link rel="stylesheet" href="">
+	<style type="text/css" media="screen">
+		body,table{ 
+			font-size:18px; 
+		} 
+		table{ 
+			table-layout:fixed; 
+			empty-cells:show; 
+			border-collapse: collapse; 
+			margin:0 auto; 
+			border:1px solid #cad9ea; 
+			color:#666; 
+		} 
+		th {
+			background-repeat:repeat-x; 
+			height:20px; 
+			border:1px solid #cad9ea; 
+			padding:0 1em 0; 
+		}
+		td {
+			border:1px solid #cad9ea; 
+			padding:0 1em 0; 
+		}
+		p {
+			font-size: 15px;
+		}
+	</style>
+    <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$("#btn1").click(function(){
+            var obj1=document.getElementById('id');
+            var obj2=document.getElementById('name');
+            var obj3=document.getElementById('inprice');
+            var obj4=document.getElementById('outprice');
+            var obj6=document.getElementById('type');
+            var goods = new Object();
+            console.log(typeof goods)
+            goods.id= obj1.value;
+            goods.name= obj2.value;
+            goods.inprice= obj3.value;
+            goods.outprice=obj4.value;
+            goods.type= obj6.value;
+            console.log(goods);
+            if(goods.id === '' ){
+                alert('产品编号不能为空');
+            }else if(goods.name === ''){
+                alert('产品名称不能为空')
+			}
+			else if(goods.inprice === ''){
+                alert('产品进价不能为空')
+			}else if(goods.outprice === ''){
+                alert('产品预售价不能为空')
+			}else if(goods.supplier === ''){
+                alert('供应商名称不能为空')
+			}else {
+                $.ajax({
+                    type:'POST',
+                    data:goods,
+                    url :'good/addGood',
+                    dataType:'text',
+                    success :function(data) {
+                        alert(data)
+                    },
+                    error :function(e) {
+                        alert("添加失败")
+                    }
+                });
+			}
+		});
+	})	
+	</script>
+</head>
+<body>
+	    <table border="1px">
+	    	<caption><h2>新产品信息录入</h2></caption>
+	    	<tbody>
+	    		<tr>
+                    <th>编&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号</th>
+	    			<td><input type ="text " id="id" name="id" value=""  onkeyup="value=value.replace(/[^\d]/g,'') "onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"></td>
+	    			<td colspan="" rowspan="" headers=""><p>*必须为数字</p></td>
+                </tr>
+                <tr>
+                    <th>名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称</th>
+	    			<td><input type ="textarea" id="name" name="name" value="" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5]/g,''))"></td>
+	    			<td><p>*必须为文字</p></td>
+                </tr>
+                <tr>
+                    <th>进价（元/个）</th>
+	    			<td><input type ="text" id="inprice" name="inprice" value="" ></td>
+	    			<td colspan="" rowspan="" headers=""  onkeyup="value=value.replace(/[^\d]/g,'') "onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"><p>*必须为数字</p></td>
+                </tr>
+                <tr>
+                    <th>预售价（元/个）</th>
+	    			<td><input type ="text" id="outprice" name="outprice" value="" ></td>
+	    			<td colspan="" rowspan="" headers=""  onkeyup="value=value.replace(/[^\d]/g,'') "onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"><p>*必须为数字</p></td>
+                </tr>
+                <tr>
+                    <th>商品类别</th>
+	    			<td>
+						<select name="type" id="type" name="type">
+							<option value="一类">一类</option>
+							<option value="二类">二类</option>
+							<option value="三类">三类</option>
+							<option value="四类">四类</option>
+							<option value="五类">五类</option>
+							<option value="六类">六类</option>
+							<option value="七类">七类</option>
+						</select>
+					</td>
+	    			<td><p>*请选择类别</p></td>
+                </tr>
+	    		
+	    	    <tr >
+	    	        <td ></td>
+	    			<td ><button   id="btn1" >点击录入</button></td>
+	    			<td></td>
+	    		</tr>
+	    	</tbody>
+	    </table>
+	    
+</body>
+</html>

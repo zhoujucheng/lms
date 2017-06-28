@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>供应商资料提交页面</title>
+	<link rel="stylesheet" href="">
+	<style type="text/css" media="screen">
+		body,table{ 
+			font-size:18px; 
+		} 
+		table{ 
+			table-layout:fixed; 
+			empty-cells:show; 
+			border-collapse: collapse; 
+			margin:0 auto; 
+			border:1px solid #cad9ea; 
+			color:#666; 
+		} 
+		th {
+			background-repeat:repeat-x; 
+			height:30px; 
+			border:1px solid #cad9ea; 
+			padding:0 1em 0; 
+		}
+		td {
+			border:1px solid #cad9ea; 
+			padding:0 1em 0; 
+		}
+		input {
+			
+		}
+	</style>
+    <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$("#btn1").click(function(){
+            var obj1=document.getElementById('number');
+            var obj2=document.getElementById('name');
+            var obj3=document.getElementById('address');
+            var obj4=document.getElementById('email');
+            var obj5=document.getElementById('tel');
+            var obj6=document.getElementById('people');
+            var obj7=document.getElementById('type');
+            var user = new Object();
+            console.log(typeof user)
+            user.number= obj1.value;
+            user.name= obj2.value;
+            user.address= obj3.value;
+            user.email=obj4.value;
+            user.tel= obj5.value;
+            user.people= obj6.value;
+            user.type= obj7.value;
+            console.log(user);
+
+        $.ajax({
+			type:'POST',
+			data:JSON.stringify(users),
+			url :'user/login',
+			success :function(data) {
+				    alert("添加成功");
+				},
+			error :function(e) {
+				alert("添加失败");
+				}
+		});
+	});
+})	
+	</script>
+</head>
+<body>
+	    <table border="1px">
+	    	<caption><h5>增加供应商资料</h5></caption>
+	    	<tbody>
+	    		<tr>
+                    <th>编&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号</th>
+	    			<td><input type ="text " id="number" name="number" value=""></td>
+                </tr>
+                <tr>
+                    <th>名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称</th>
+	    			<td><input type ="textarea" id="name" name="name" value=""></td>
+                </tr>
+                <tr>
+                    <th>联系地址</th>
+	    			<td><input type ="text " id="address" name="address" value=""></td>
+                </tr>
+                <tr>
+                    <th>邮箱地址</th>
+	    			<td><input type ="text" id="email" name="email" value="" placeholder="@email"></td>
+                </tr>
+                <tr>
+                    <th>联系方式</th>
+	    			<td><input type ="text" id="tel" name="tel" value=""></td>
+                </tr>
+                <tr>
+                    <th>联&nbsp;系&nbsp;人</th>
+	    			<td><input type ="text" id="people" name="people" value=""></td>
+                </tr>
+                <tr>
+                    <th>类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</th>
+	    			<td>
+						<select name="type" id="type" name="type">
+							<option value="一类">一类</option>
+							<option value="二类">二类</option>
+							<option value="三类">三类</option>
+						</select>
+					</td>
+                </tr>
+	    		
+	    	    <tr>
+	    	        <th><input type="reset" name="" value="重置"></th>
+	    			<td><button   id="btn1" >提交资料</button></td>
+	    		</tr>
+	    	</tbody>
+	    </table>
+	    
+</body>
+</html>

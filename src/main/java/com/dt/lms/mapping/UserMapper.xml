@@ -9,6 +9,11 @@
   <sql id="Base_Column_List">
     id, name, password
   </sql>
+
+  <select id="findUserByName" parameterType="java.lang.String"  resultType="com.dt.lms.domain.User">
+    SELECT * FROM lms_user WHERE name = #{name}
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

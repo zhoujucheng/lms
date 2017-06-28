@@ -13,6 +13,17 @@ public class Good {
 
     private String type;
 
+    public Good(){}
+
+    public Good(Integer id, String name, Integer amount, Double inprice, Double outprice, String type) {
+        this.id = id;
+        this.name = name;
+        this.amount = amount;
+        this.inprice = inprice;
+        this.outprice = outprice;
+        this.type = type;
+    }
+
     public Integer getId() {
         return id;
     }

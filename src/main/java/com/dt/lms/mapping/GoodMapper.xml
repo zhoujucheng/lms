@@ -13,8 +13,16 @@
     id, name, amount, inPrice, outPrice, type
   </sql>
 
-  <select id="selectByName" resultType="com.dt.lms.domain.Good">
-    SELECT * FROM good WHERE NAME LIKE "%"#{name}"%"
+  <insert id="addOrder" parameterType="com.dt.lms.domain.Order">
+    INSERT into lms_order VALUES (#{id},#{goodId},#{goodName},#{price},#{suporre},#{time},#{type})
+  </insert>
+
+  <select id="findGoodByName" parameterType="java.lang.String"  resultType="com.dt.lms.domain.Good">
+    SELECT * FROM good WHERE name = #{name}
+  </select>
+
+  <select id="searchByName" parameterType="java.lang.String" resultType="com.dt.lms.domain.Good">
+    SELECT * FROM good WHERE name LIKE "%"#{name}"%"
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

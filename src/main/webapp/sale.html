@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript">
+        var numReg = new RegExp(/^\d+$/);
+        function post(content,url) {
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: content,
+                dataType:"text",
+                success:function (data,status) {
+                    if(data === "请先登录"){
+                        top.location = "login.html";
+                    }else {
+                        alert(data);
+                    }
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $('#good_id_out').click(function () {
+                var id = $('#good_id').val();
+                var amount = $('#good_id_amount').val();
+                var price = $('#good_id_price').val()
+                var retail = $('#good_id_retail').val();
+                if(!numReg.test(id)){
+                    alert('商品代号必须为数值');
+                }else if(!numReg.test(amount)){
+                    alert('数量必须为整数');
+                }else if(retail === ""){
+                    alert('商家不能为空')
+                }else {
+                    var content = { id:id,amount:amount,retail:retail,price:price };
+                    post(content,"good/idOut");
+                }
+            });
+
+            $('#good_name_out').click(function () {
+                var name = $('#good_name').val();
+                var amount = $('#good_name_amount').val();
+                var retail = $('#good_name_retail').val();
+                var price = $('#good_name_price').val()
+                if(name === ''){
+                    alert('商品名称不能为空');
+                }else if(!numReg.test(amount)){
+                    alert('数量必须为整数');
+                }else if(retail === ""){
+                    alert('商家不能为空')
+                }else {
+                    var content = { name:name,amount:amount,retail:retail,price:price };
+                    post(content,"good/nameOut");
+                }
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>商品代号</th>
+            <th>单价</th>
+            <th>数量</th>
+            <th>商家</th>
+        </tr>
+        <tr>
+            <td><input id="good_id" type="text"></td>
+            <td><input id="good_id_price" type="text"></td>
+            <td><input id="good_id_amount" type="number"></td>
+            <td><input id="good_id_retail" type="text"></td>
+            <td><button id="good_id_out">出库</button> </td>
+        </tr>
+
+        <tr>
+            <th>商品名称</th>
+            <th>单价</th>
+            <th>数量</th>
+            <th>商家</th>
+        </tr>
+        <tr>
+            <td><input id="good_name" type="text"></td>
+            <td><input id="good_name_price" type="text"></td>
+            <td><input id="good_name_amount" type="number"></td>
+            <td><input id="good_name_retail" type="text"></td>
+            <td><button id="good_name_out">出库</button> </td>
+        </tr>
+    </table>
+</body>
+</html>

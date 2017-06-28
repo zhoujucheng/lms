@@ -4,13 +4,22 @@ import com.dt.lms.domain.User;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by dtjc on 2017/6/22.
  */
 public class Util {
-    public static User getLoginUser(){
+    public static void checkLogin(){
         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         User user = (User)attr.getRequest().getSession().getAttribute(User.USER_ATTR_NAME);
-        return user;
+        if (user == null)   throw new InfoException("请先登录");
+    }
+
+    public static String defaultDateFormate(long time){
+        Date date = new Date(time);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return format.format(date);
     }
 }

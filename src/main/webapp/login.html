@@ -32,7 +32,7 @@
 console.log('dododo')
 $(document).ready(function () {
     $('#login').click(function(){
-            if ($("input[name='txtuser']").val() == "") {
+		 if ($("input[name='txtuser']").val() == "") {
              alert("用户名不能为空");
              return false;
          }
@@ -42,24 +42,16 @@ $(document).ready(function () {
              return false;
          }
          else {
-            console.log('kk')
             $.ajax({
                 type: "POST",
                 url: "user/login",
-                data: { userName: $("input[name='txtuser']").val(),
-                  pwd: $("input[name='txtpwd']").val(),
-            },
-              
-               dataType:"json",
-               contentType:"json",
+                data: { userName: $("input[name='txtuser']").val(),pwd: $("input[name='txtpwd']").val()},
                 success: function (data, status) {
-                    var types = data;
-                     console.log(data);
-                     if (types.toString() != "登录成功") {
-                        
+                     if (data === "登录成功") {
+                         window.location.href="index.html";
                      }
                      else{
-                     window.location.href="index.html";
+                     	alert(data);
                      }
                  },
                  error: function () { console.log('error') }

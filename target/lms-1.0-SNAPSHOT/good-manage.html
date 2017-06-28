@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>商品管理界面</title>
+<style type="text/css">
+    *{  padding:0px；margin:0px;}
+    input {width:111px;height:24px;outline:none;}
+    *:focus { outline: none; } 
+    table#stuRecordTable{width:1200px;margin:0 auto;text-align: center;}
+    table#stuRecordTable tr{height:25px;}
+</style>
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+    onload = function(){
+        doOperator();       
+    }
+    function doOperator(){
+
+        var updates =$(".update");
+        var dels =$(".del");
+        for (var i = 0; i < dels.length; i++) {
+            dels[i].onclick =   function(){
+                if(confirm("是否确定删除？")) {  //提示是否删除
+                    var account =this.parentNode.parentNode.getElementsByTagName("td")[2].innerText;
+                    console.log(this.parentNode.parentNode.getElementsByTagName("td")[2].innerText);
+                    if (account > 0) {//库存不为零，无法删除；
+                    	alert('库存不为零，无法删除', '提示');
+                    }else{
+                    	$("#stuRecordTable")[0].deleteRow(this.parentNode.parentNode.rowIndex);
+                    }
+                }
+            }  
+        }
+        for (var i = 0; i < dels.length; i++) {           
+            updates[i].onclick = function(){ 
+                var arr1 = new Array();
+                arr1[0]=this.parentNode.parentNode.getElementsByTagName("td")[0]; //取到要操作的td对象
+                arr1[1]=this.parentNode.parentNode.getElementsByTagName("td")[1]; //取到要操作的td对象
+                arr1[2]=this.parentNode.parentNode.getElementsByTagName("td")[2]; //取到要操作的td对象
+                arr1[3]=this.parentNode.parentNode.getElementsByTagName("td")[3]; //取到要操作的td对象
+                arr1[4]=this.parentNode.parentNode.getElementsByTagName("td")[4]; //取到要操作的td对象
+                arr1[5]=this.parentNode.parentNode.getElementsByTagName("td")[5]; //取到要操作的td对象
+                //1.修改按钮上有两个功能：修改，确定修改
+                //console.log(arr1);
+                for(var i=0;i<arr1.length;i++){
+                    if(this.value == "修改"){
+                        arr1[i].innerHTML ="<input value='"+arr1[i].innerHTML+"'/>";//把内容变成文本框
+                        //做修改操作
+                    }else{
+                       arr1[i].innerHTML =arr1[i].getElementsByTagName("input")[0].value;
+                       //把文本框变成内容
+                    //做确定修改
+                    }
+                }
+                if(this.value == "修改"){
+                    this.value = "确定";
+                }else{
+                    this.value = "修改";
+                }
+            }
+        }  
+    }
+    var id="id";
+    var name = new Array("商品","二类","三类");
+    var nType = new Array("一类","二类","三类");
+    function addRow(){
+        var rs = $("#stuRecordTable")[0].rows;  //table取到所有的行
+        var insertR = $("#stuRecordTable")[0].insertRow(rs.length-1); //给表格添加一行(不包单元格)
+        //insertR.innerHTML = rs[1].innerHTML;    
+        var c1 = insertR.insertCell(0);       
+        c1.innerHTML = "0"+Math.round(Math.random() * 9);
+        var c2 = insertR.insertCell(1);
+        c2.innerHTML = "商品" +Math.round(Math.random() * 10);
+        var c3 = insertR.insertCell(2);
+        c3.innerHTML = Math.round(Math.random() * 100) ;
+        var c4 = insertR.insertCell(3);
+        c4.innerHTML =  Math.round(Math.random() * 1000)/10;
+        var c5 = insertR.insertCell(4);
+        c5.innerHTML = Math.round(Math.random() * 1000)/10;
+        var c6 = insertR.insertCell(5);
+        c6.innerHTML = nType[parseInt(Math.random() * 3)];
+        var c7 = insertR.insertCell(6);
+        c7.innerHTML ='<input type="button" value="删除" class="del"/> ';
+        var c8 = insertR.insertCell(7);
+        c8.innerHTML ='<input type="button" value="修改" class="update"/>';
+        doOperator();
+        var cs = rs[1].cells; //取到当前行的所有单元格
+        //alert(cs[1].innerHTML);
+    }    
+</script>
+</head>
+<body>
+    <table id="stuRecordTable"   width="100%" border="1" cellpadding="0" cellspacing="0" style="table-layout:fixed">
+    <h3 align="center">商品库存管理</h3>   
+        <tr>
+            <th>编码</th> 
+            <th>名称</th>
+            <th>库存量(个)</th>
+            <th>售价（元/个）</th>
+            <th>进价（元/个）</th>
+            <th>类别</th>
+            <th>编辑</th>
+            <th>删除</th>
+        </tr>
+        <tr>
+            <td >01</td>
+            <td >花蟹</td>
+            <td id="account1">9</td>
+            <td >21.0</td>
+            <td >30.0</td>
+            <td >三类</td>
+            <td><input type="button" value="删除" class="del"/></td>
+            <td><input type="button" value="修改" class="update"/></td>
+        </tr>
+        <tr>
+           <td>02</td>
+            <td>花蟹</td>
+            <td id="account2">9</td>
+            <td>21.0</td>
+            <td>30.0</td>
+            <td>二类</td>
+            <td><input type="button" value="删除" class="del"/></td>
+            <td><input type="button" value="修改" class="update"/></td>
+        </tr>
+        <tr>
+            <td colspan="4">
+            <input type="button" value="添加" onclick="addRow()"/>
+            </td>
+            <td colspan="4">
+            <input type="button" value="提交" id="btn1" />
+            </td>
+        </tr>
+    </table>
+<script type="text/javascript">
+ $(document).ready(function() {  
+    $("#btn1").click(function(){  
+        var trs = $("#stuRecordTable").children().children();  
+        for(var i=1; i<trs.length-1;i++){  
+            var tds = trs.eq(i).children();  
+            var arr2=new Array();
+            console.log(arr2);
+            for(var j=0; j<tds.length-2; j++)  {  
+                arr2.push((tds).eq(j).text());
+                //console.log(arr2);
+            } 
+        }  
+        $.ajax({
+            type:'POST',
+            url:'',
+            data:{'param':arr2},
+            dataType:'json',
+            error:erryFunction,
+            success:succFunction()
+        })
+        function erryFunction() {  
+            alert("提交失败，请重试！");  
+        } 
+        function succFunction(data) {
+            var obj=eval("(" + data + ")");
+            console.log(obj);
+            alert('提交成功！')
+        }
+    }); 
+});
+</script>
+</body>
+</html>

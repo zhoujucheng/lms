@@ -1,0 +1,58 @@
+create database if not exists lms;
+use lms;
+
+drop table lms_order;
+drop table lms_user;
+drop table good;
+drop table supOrRe;
+
+create table if not exists lms_user (
+id int auto_increment primary key,
+name varchar(64) not null unique,
+password varchar(16) not null
+);
+
+insert into lms_user values(null,'qwe','123456');
+insert into lms_user values(null,'abc','abc');
+
+create table if not exists good(
+id int auto_increment primary key,
+name varchar(64) not null unique,
+amount int default 0,
+inPrice double(16,2) not null,
+outPrice double(16,2) not null,
+type varchar(32)
+);
+
+insert into good values(null,'abbc',15,10,15,'q');
+insert into good values(null,'bcc',15,10,15,'h');
+insert into good values(null,'ccc',15,10,15,'q');
+insert into good values(null,'ccb',15,10,15,'q');
+insert into good values(null,'aadd',15,10,15,'q');
+
+
+create table if not exists supOrRe(
+id int auto_increment primary key,
+name varchar(64) not null unique,
+address text not null,
+phone varchar(24) not null,
+url varchar(64),
+type int
+);
+
+insert into supOrRe values(null,'sup1','abc','1234','asdf',1);
+insert into supOrRe values(null,'re1','abc','1234','asdf',2);
+insert into supOrRe values(null,'sup2','abc','1234','asdf',1);
+insert into supOrRe values(null,'re2','abc','1234','asdf',2);
+
+create table if not exists lms_order(
+id int auto_increment primary key,
+good_id int,
+good_name varchar(64),
+price double(16,2) not null,
+supOrRe varchar(64),
+time datetime not null,
+type int,
+foreign key(good_id) references good(id),
+foreign key(good_name) references good(name)
+);
