@@ -3,17 +3,25 @@
 <head>
 <meta charset="utf-8">
 <title></title>
+<style type="text/css">
+    *{  padding:0px；margin:0px;}
+    input {width:111px;height:24px;outline:none;}
+    *:focus { outline: none; } 
+    table#stuRecordTable{width:1100px;margin:0 auto;text-align: center;}
+    table#stuRecordTable tr{height:25px;}
+    #sousuo {text-align: center;}
+</style>
 <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
 
 <script type="text/javascript">
+    var changeNum = 0
 $(document).ready(function() {
     $('#btn').click(function(){
-        console.log('1');
         $.ajax({
             type:'POST',
             url:'good/query',
             data:{name:$("input[name='Name']").val()},
-            dataType:'json',
+            dataType:'text',
             beforeSend:LoadFunction,
             error:erryFunction,
             success:succFunction
@@ -26,55 +34,144 @@ $(document).ready(function() {
             alert("商品不存在，请重试！");  
         } 
         function succFunction(data) {
-            if(data === '请先登录'){
+            if(data === "请先登录"){
                 alert(data)
                 return
             }
             data=eval(data);
-            var tbody=$('<tbody></tbody>');
+            var tr =''
             $.each(data,function(key,val){
-                console.log(key,val);
-                var tr=$('<tr></tr>');
                 //在标签结尾插入指定内容
-                tr.append('<td>'+ val.id + '</td>'  + '<td>'+ val.name + '</td>' +'<td>'+ val.amount + '</td>' + '<td>'+val.inprice+'</td>'+'<td>'+val.outprice+'</td>'+'<td>'+val.type+'</td>');
-                tbody.append(tr);
+                tr=tr+'<tr id="tr'+key+'"><td>'+ val.id + '</td>'  + '<td>'+ val.amount + '</td>' +'<td>'+  val.name+ '</td>' + '<td>'
+                    +val.inprice+'</td>'+'<td>'+val.outprice+'</td>'+'<td>'+val.type+'</td>'+'<td>'+'<button id="change'+key+'">修改</button>'
+                    +'</td>';
+                if(val.amount <= 0){
+                    tr = tr + '<td><button id="delete'+key+'">删除</button></td>'
+                }
+                tr = tr + '</tr>'
             });
-            $('#myTable tbody').replaceWith(tbody);  
+            $('#tbody').html(tr)
+            $.each(data,function (i,v) {
+                if(v.amount <= 0){
+                    var del = '#delete'+i
+                    $(del).click(function () {
+                        $.ajax({
+                            type:'GET',
+                            url:'good/delete',
+                            data:{id:v.id},
+                            dataType:'text',
+                            success:function (data) {
+                                alert(data)
+                            }
+                        })
+                    })
+                }
+                
+                var change = '#change' + i
+                $(change).click(function () {
+                    var trid = 'tr'+i
+                    var tds = document.getElementById(trid).getElementsByTagName('td')
+                    var k
+                    if(v.amount <= 0){
+                        k = tds.length -2
+                    }else {
+                        k = tds.length -1
+                    }
+
+
+                    if(changeNum%2===0){
+                        for(var j = 2;j < k;j++){
+                            tds[j].innerHTML = '<input type="text" value="'+tds[j].innerText+'"/>'
+                        }
+                        $(change).text("完成")
+                        changeNum++
+                        console.log('change text:'+$(change).text())
+                    }else if($(change).text() === "完成"){
+                        var goodChang = new Object()
+                        $(change).text("修改")
+                        for(var j = 2;j < k;j++){
+                            tds[j].innerHTML = tds[j].getElementsByTagName('input')[0].value
+                        }
+                        changeNum++
+                        goodChang.id = v.id
+                        goodChang.name = tds[2].innerText
+                        goodChang.inprice = tds[3].innerText
+                        goodChang.outprice = tds[4].innerText
+                        goodChang.type = tds[5].innerText
+                        $.ajax({
+                            type:'GET',
+                            url:'good/goodChange',
+                            data:goodChang,
+                            dataType:'text',
+                            success:function (data) {
+                                if(data.substring(0,4) === "修改失败"){
+                                    tds[2].innerText = v.name
+                                    tds[3].innerText = v.inprice
+                                    tds[4].innerText = v.outprice
+                                    tds[5].innerText = v.type
+                                }
+                                alert(data)
+                            }
+                        })
+                    }else {
+                        alert("请先完成上次的修改")
+                    }
+                })
+
+            })
         }
-    });    
+    });
 });
-    
 </script>
 </head>
 <body>
-    请输入商品名:<input type="text" name="Name" />
+    <div id="sousuo">请输入商品名:<input type="text" name="Name" />
     <input type="button" value="搜索" id="btn" />
-    
-    <table id="myTable" cellpadding="1" cellspacing="0" border="1">
+    </div>
+    <table id="stuRecordTable"   width="100%" border="1" cellpadding="0" cellspacing="0" style="table-layout:fixed">
         <thead>
-            
-            <td>编码</td>
-            <td>名称</td>
-            <td>库存量</td>
-            <td>售价（元/个）</td>
-            <td>进价（元/个）</td>
-            <td>类别</td>
+            <th>编码</th> 
+            <th>库存量(个)</th>
+            <th>名称</th>
+            <th>进价（元/个）</th>
+            <th>预售价（元/个）</th>
+            <th>类别</th>
+            <th>编辑</th>
+            <th>删除</th>
         </thead>
-        <tbody>
-            <tr>
-               
-            </tr> 
+        <tbody id="tbody">
+            <!--<tr>
+                <td >01</td>
+                <td id="account1">9</td>
+                <td >花蟹</td>
+                <td >21.0</td>
+                <td >30.0</td>
+                <td >三类</td>
+                <td><input type="button" value="删除" class="del"/></td>
+                <td><input type="button" value="修改" class="update"/></td>
+            </tr>
+             <tr>
+                <td >01</td>
+                <td id="account1">9</td>
+                <td >花蟹</td>
+                <td >21.0</td>
+                <td >30.0</td>
+                <td >三类</td>
+                <td><input type="button" value="删除" class="del"/></td>
+                <td><input type="button" value="修改" class="update"/></td>
+            </tr> -->
         </tbody>
     </table>
-    <!-- [{"id":1,
-                "name":"abc",
+    <!-- [     {"id":1,
                 "amount":12,
+                "name":"abc",
                 "inprice":10.5,
                 "outprice":15.0,
                 "type":"q"},
                 {"id":2,"name":"aab","amount":12,"inprice":10.5,"outprice":15.0,"type":"q"},{"id":3,"name":"bcc","amount":12,"inprice":10.5,"outprice":15.0,"type":"q"},{"id":4,"name":"aabcc","amount":12,"inprice":10.5,"outprice":15.0,"type":"q"}]-->
-    <ul id="list">     
-    </ul>
+<script type="text/javascript">
+ 
+</script>
 
 
     </body>

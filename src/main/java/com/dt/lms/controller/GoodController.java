@@ -132,24 +132,20 @@ public class GoodController {
 
     private void goodCheck(int id, String name, double inprice, double outprice, String type){
         if (id < 0){
-            throw new InfoException("id不能为负");
+            throw new InfoException("修改失败,id不能为负");
         }
         if (name == null || name.equals("")){
-            throw new InfoException("商品名不能为空");
+            throw new InfoException("修改失败,商品名不能为空");
         }
         if (type == null || type.equals("")){
-            throw new InfoException("类型不能为空");
+            throw new InfoException("修改失败,类型不能为空");
         }
         if (inprice < 0 || outprice <0){
-            throw new InfoException("价格不能为负");
+            throw new InfoException("修改失败,价格不能为负");
         }
-        Good good = goodMapper.selectByPrimaryKey(id);
-        if (good != null){
-            throw new InfoException("商品id已存在");
-        }
-        good = goodMapper.findGoodByName(name);
-        if (good != null){
-            throw new InfoException("商品名已存在");
+        Good good = goodMapper.findGoodByName(name);
+        if (good != null && good.getId() != id){
+            throw new InfoException("修改失败,商品名存在!");
         }
     }
 

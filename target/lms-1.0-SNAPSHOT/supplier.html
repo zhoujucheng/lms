@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type:'GET',
+                url:'supOrRe/inquiryByType',
+                data:{type:1},
+                dataType:'text',
+                success:function (data) {
+                    if(data === '请先登录'){
+                        alert(data)
+                        return
+                    }
+                    data = eval(data)
+                    var tr='';
+                    $.each(data,function (i,v) {
+                        tr = tr + '<tr>'
+                        $.each(v,function (j,v1) {
+                            if(j !== 'type'){
+                                tr = tr + '<td>'+v1+'</td>'
+                            }
+                        })
+                        tr = tr+'</tr>'
+                    })
+                    tr = tr + '<tr><td></td><td></td><td><button id="addSup">增加供应商</button></td></tr>'
+                    var table = $('#table')
+                    table.html(table.html()+tr)
+                    $('#addSup').click(function () {
+                        window.location.href = 'supplier+.html'
+                    })
+                }
+            })
+
+        })
+    </script>
+    <style type="text/css">
+       table#table{width:600px;margin:0 auto;text-align: center;border-color:#0CC7EE;}
+       table#table tr{height:25px;}
+       table#table th{border-color:#0CC7EE;border:0.5 solid #0CC7EE;}
+       table#table td{border-color:#0CC7EE;}
+    </style>
+    <title>Title</title>
+</head>
+<body>
+    <table id="table" border="1" cellspacing="0" cellpadding="0">
+        
+        <tr>
+            <th>供应商编号</th>
+            <th>供应商</th>
+            <th>电话</th>
+            <th>地址</th>
+            <th>网站</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>3</td>
+            <td>3</td>
+        </tr>
+    </table>
+</body>
+</html>

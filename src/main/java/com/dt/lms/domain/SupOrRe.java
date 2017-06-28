@@ -7,9 +7,20 @@ public class SupOrRe {
 
     private String phone;
 
+    private String address;
+
     private String url;
 
-    private String address;
+    private int type;
+
+    public SupOrRe(Integer id, String name, String phone, String address, String url,int type) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.address = address;
+        this.url = url;
+        this.type = type;
+    }
 
     public Integer getId() {
         return id;
@@ -49,5 +60,13 @@ public class SupOrRe {
 
     public void setAddress(String address) {
         this.address = address == null ? null : address.trim();
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public int getType() {
+        return type;
     }
 }

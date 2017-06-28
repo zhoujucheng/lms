@@ -6,6 +6,35 @@
 	<title></title>
 	<link rel="stylesheet" href="">
 	<script  type="text/javascript" charset="utf-8" async defer></script>
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script>
+		$(document).ready(function () {
+		    var attr = 'name'
+			var cookie = document.cookie
+			var start = cookie.indexOf(attr)
+			if(start !== -1){
+                start = start + attr.length+1;
+                var end = cookie.indexOf(';',start)
+                if(end === -1)	end = cookie.length
+                var name = cookie.substring(start,end);
+			}
+			$('#name').text(name)
+			$('#logout').click(function () {
+                if(confirm("是否确定退出？")){
+                    $.ajax({
+                        type:'GET',
+                        url:'user/logOut',
+                        success:function (data) {
+                            if(data){
+                                document.cookie=''
+                                top.location = 'login.html'
+							}
+                        }
+                    })
+                }
+            })
+        })
+	</script>
 	<style type="text/css" media="screen">
 		html,body,div,p,form,label,ul,li,dl,dt,dd,ol,img,button,h1,h2,h3,h4,h5,h6,b,em,strong,small{margin:0;padding:0;border:0;list-style:none;font-style:normal;font-weight:normal;}
 		dl,dt,dd{display:block;margin:0;}
@@ -25,10 +54,9 @@
 	    <div class="navigation">
 		    <ul>
 			    <li>欢迎您！</li>
-			    <li><a href="">管理员</a></li>
-			    <li><a href="">修改密码</a></li>
-			    <li><a href="">设置</a></li>
-			    <li><a href="">退出</a></li>
+			    <li id="name">管理员</li>
+			    <li><a>修改密码</a></li>
+			    <li><a id="logout">退出</a></li>
 		    </ul>
 	    </div>
 	</div>

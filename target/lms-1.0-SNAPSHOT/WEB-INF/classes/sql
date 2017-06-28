@@ -52,7 +52,5 @@ good_name varchar(64),
 price double(16,2) not null,
 supOrRe varchar(64),
 time datetime not null,
-type int,
-foreign key(good_id) references good(id),
-foreign key(good_name) references good(name)
+type int
 );

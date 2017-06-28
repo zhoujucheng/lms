@@ -40,4 +40,12 @@ public class UserController {
         return msg;
     }
 
+    @RequestMapping("/logOut")
+    public boolean logOut(){
+        ServletRequestAttributes attr = (ServletRequestAttributes)RequestContextHolder.currentRequestAttributes();
+        attr.getRequest().getSession().setAttribute(User.USER_ATTR_NAME,null);
+        return true;
+    }
+
+
 }

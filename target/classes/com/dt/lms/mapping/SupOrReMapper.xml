@@ -6,17 +6,17 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="type" jdbcType="INTEGER" property="type" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.dt.lms.domain.SupOrRe">
     <result column="address" jdbcType="LONGVARCHAR" property="address" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, phone, url
+    id, name, phone, url, type
   </sql>
   <sql id="Blob_Column_List">
     address
   </sql>
-
   <select id="inquiryByType" parameterType="java.lang.Integer" resultType="com.dt.lms.domain.SupOrRe">
     SELECT * FROM supOrRe WHERE type = #{type}
   </select>
@@ -34,9 +34,11 @@
   </delete>
   <insert id="insert" parameterType="com.dt.lms.domain.SupOrRe">
     insert into suporre (id, name, phone, 
-      url, address)
+      url, type, address
+      )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{url,jdbcType=VARCHAR}, #{address,jdbcType=LONGVARCHAR})
+      #{url,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{address,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.dt.lms.domain.SupOrRe">
     insert into suporre
@@ -52,6 +54,9 @@
       </if>
       <if test="url != null">
         url,
+      </if>
+      <if test="type != null">
+        type,
       </if>
       <if test="address != null">
         address,
@@ -70,6 +75,9 @@
       <if test="url != null">
         #{url,jdbcType=VARCHAR},
       </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
       <if test="address != null">
         #{address,jdbcType=LONGVARCHAR},
       </if>
@@ -87,6 +95,9 @@
       <if test="url != null">
         url = #{url,jdbcType=VARCHAR},
       </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
       <if test="address != null">
         address = #{address,jdbcType=LONGVARCHAR},
       </if>
@@ -98,6 +109,7 @@
     set name = #{name,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
       address = #{address,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -105,7 +117,8 @@
     update suporre
     set name = #{name,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
-      url = #{url,jdbcType=VARCHAR}
+      url = #{url,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

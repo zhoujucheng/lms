@@ -28,9 +28,9 @@
     </style>
 <!--<script src="js/config.js" type="text/javascript" charset="utf-8" ></script>-->
 <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-<script type="text/javascript"> 
-console.log('dododo')
+<script type="text/javascript">
 $(document).ready(function () {
+    console.log(document.cookie)
     $('#login').click(function(){
 		 if ($("input[name='txtuser']").val() == "") {
              alert("用户名不能为空");
@@ -38,16 +38,17 @@ $(document).ready(function () {
          }
          else if ($("input[name='txtpwd']").val() == "") {
              alert("密码不能为空");
-
              return false;
          }
          else {
+		     var name = $("input[name='txtuser']").val()
             $.ajax({
                 type: "POST",
                 url: "user/login",
-                data: { userName: $("input[name='txtuser']").val(),pwd: $("input[name='txtpwd']").val()},
+                data: { userName: name,pwd: $("input[name='txtpwd']").val()},
                 success: function (data, status) {
                      if (data === "登录成功") {
+                         document.cookie = "name="+name+";"
                          window.location.href="index.html";
                      }
                      else{
@@ -55,7 +56,6 @@ $(document).ready(function () {
                      }
                  },
                  error: function () { console.log('error') }
-                
              });
          }
      });
