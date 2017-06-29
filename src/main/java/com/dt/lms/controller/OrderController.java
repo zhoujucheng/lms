@@ -26,11 +26,23 @@ public class OrderController {
     public List<Order> outInquiryByDate(String date, int type){
         Util.checkLogin();
         if (type != IN_ORDER && type != OUT_ORDER){
-            throw new InfoException("不支持的类型");
+            throw new InfoException("查询失败,不支持的类型");
         }
         return orderMapper.inquiryByDate(date,type);
     }
 
+    @RequestMapping("orderInquiryByDate")
+    public List<Order> inquiryOrderByDate(String date,int type){
+        Util.checkLogin();
+        if (date == null || date.equals(""))    return null;
+        return orderMapper.inquiryByDate(date,type);
+    }
 
+    @RequestMapping("orderInquiryById")
+    public Order inquiryOrderById(int id){
+        Util.checkLogin();
+        if (id<=0)  return null;
+        return orderMapper.selectByPrimaryKey(id);
+    }
 
 }

@@ -41,13 +41,13 @@ public class GoodController {
                 if (goodMapper.deleteByPrimaryKey(id) == 1){
                     msg = "删除成功";
                 }else {
-                    msg = "删除失败";
+                    msg = "删除失败，原因未知";
                 }
             }else {
-                msg = "商品数量必须为0时才能删除";
+                msg = "删除失败，商品数量必须为0时才能删除";
             }
         }else {
-            msg = "商品不存在";
+            msg = "删除失败，商品不存在";
         }
         return msg;
     }
@@ -64,7 +64,7 @@ public class GoodController {
     @RequestMapping("/nameOut")
     public String out(String name,int amount,String retail,double price){
         Util.checkLogin();
-        if (name == null)   throw new InfoException("请输入商品名称");
+        if (name == null)   throw new InfoException("出库失败,请输入商品名称");
         synchronized (goodMapper){
             Good good = goodMapper.findGoodByName(name);
             return outCheckAndUpdate(amount,good,retail,price);
@@ -75,7 +75,15 @@ public class GoodController {
     public String addGood(int id, String name, double inprice, double outprice, String type){
         Util.checkLogin();
         goodCheck(id,name,inprice,outprice,type);
-        Good good = new Good(id,name,0,inprice,outprice,type);
+        Good good = goodMapper.selectByPrimaryKey(id);
+        if (good != null){
+            throw new InfoException("添加失败,商品编号已存在!");
+        }
+        good = goodMapper.findGoodByName(name);
+        if (good != null){
+            throw new InfoException("添加失败,商品名已存在!");
+        }
+        good = new Good(id,name,0,inprice,outprice,type);
         int status = goodMapper.insert(good);
         if (status == 1){
             return "添加成功";
@@ -97,22 +105,22 @@ public class GoodController {
             good = goodMapper.selectByPrimaryKey(id);
         }
         if (good == null){
-            throw new InfoException("商品不存在");
+            throw new InfoException("入库失败,商品不存在");
         }
         if (inprice <= 0){
-            throw new InfoException("价格为非正");
+            throw new InfoException("入库失败,价格为非正");
         }
         if (account <= 0){
-            throw new InfoException("数量为非正");
+            throw new InfoException("入库失败,数量为非正");
         }
         good.setAmount(good.getAmount()+account);
         int status = goodMapper.updateByPrimaryKey(good);
         if (status == 1){
-            Order order = new Order(good.getId(),good.getName(),inprice*account,supplier,new Date(System.currentTimeMillis()),OrderController.IN_ORDER);
+            Order order = new Order(good.getId(),good.getName(),account,inprice*account,supplier,new Date(System.currentTimeMillis()),OrderController.IN_ORDER);
             goodMapper.addOrder(order);
-            return "入库成功";
+            return "入库成功,订单号为:"+String.valueOf(order.getId())+"。当前商品库存量为："+good.getAmount();
         }else {
-            return "入库失败";
+            return "入库失败,原因未知";
         }
     }
 
@@ -120,13 +128,17 @@ public class GoodController {
     public String goodChang(int id, String name, double inprice, double outprice, String type){
         Util.checkLogin();
         goodCheck(id,name,inprice,outprice,type);
+        Good good = goodMapper.findGoodByName(name);
+        if (good != null && good.getId() != id){
+            throw new InfoException("修改失败,商品名已存在!");
+        }
         Good origin = goodMapper.selectByPrimaryKey(id);
-        Good good = new Good(id,name,origin.getAmount(),inprice,outprice,type);
+        good = new Good(id,name,origin.getAmount(),inprice,outprice,type);
         int status = goodMapper.updateByPrimaryKey(good);
         if (status == 1){
             return "修改成功";
         }else {
-            return "修改失败";
+            return "修改失败，原因未知";
         }
     }
 
@@ -143,10 +155,6 @@ public class GoodController {
         if (inprice < 0 || outprice <0){
             throw new InfoException("修改失败,价格不能为负");
         }
-        Good good = goodMapper.findGoodByName(name);
-        if (good != null && good.getId() != id){
-            throw new InfoException("修改失败,商品名存在!");
-        }
     }
 
     private String outCheckAndUpdate(int amount,Good good,String retail,double price){
@@ -156,19 +164,19 @@ public class GoodController {
             throw new InfoException("出库失败，出库数量大于库存数量,当前商品库存量为:"+good.getAmount());
         }
         if (retail == null || retail.equals("")){
-            throw new InfoException("商家不能为空");
+            throw new InfoException("出库失败，商家不能为空");
         }
         if (price < 0){
-            throw new InfoException("价格少于0");
+            throw new InfoException("出库失败，价格少于0");
         }
         good.setAmount(good.getAmount() - amount);
         int status = goodMapper.updateByPrimaryKey(good);
         if (status == 1){
-            Order order = new Order(good.getId(),good.getName(),amount*price,retail,new Date(System.currentTimeMillis()),OrderController.OUT_ORDER);
+            Order order = new Order(good.getId(),good.getName(),amount,amount*price,retail,new Date(System.currentTimeMillis()),OrderController.OUT_ORDER);
             goodMapper.addOrder(order);
-            return "出库成功,当前商品剩余库存量为:"+good.getAmount();
+            return "出库成功,订单号为:"+String.valueOf(order.getId())+"。当前商品库存量为:"+good.getAmount();
         }else {
-            return "出库失败";
+            return "出库失败，原因未知";
         }
     }
 

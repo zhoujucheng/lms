@@ -80,6 +80,7 @@
                 	$.ajax({
                     	type:'POST',
                     	data:goods,
+						dataType:'text',
                     	url :'good/goodIn',
                     	success :function(data) {
                         	alert(data);

@@ -3,23 +3,24 @@
 <mapper namespace="com.dt.lms.mapper.OrderMapper">
   <resultMap id="BaseResultMap" type="com.dt.lms.domain.Order">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="good_id" jdbcType="INTEGER" property="goodId" />
-    <result column="good_name" jdbcType="VARCHAR" property="goodName" />
+    <result column="goodId" jdbcType="INTEGER" property="goodId" />
+    <result column="goodName" jdbcType="VARCHAR" property="goodName" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
     <result column="price" jdbcType="DOUBLE" property="price" />
-    <result column="supOrRe" jdbcType="VARCHAR" property="suporre" />
+    <result column="supOrRe" jdbcType="VARCHAR" property="supOrRe" />
     <result column="time" jdbcType="TIMESTAMP" property="time" />
     <result column="type" jdbcType="INTEGER" property="type" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, good_id, good_name, price, supOrRe, time, type
+    id, goodId, goodName, amount, price, supOrRe, time, type
   </sql>
 
   <select id="inquiryByDate" resultType="com.dt.lms.domain.Order">
-    SELECT * FROM lms_user WHERE type = #{type} AND time LIKE #{date}"%"
+    SELECT * FROM lms_order WHERE type = #{type} AND time LIKE #{date}"%" ORDER BY time DESC
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from lms_order
     where id = #{id,jdbcType=INTEGER}
@@ -29,12 +30,12 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.dt.lms.domain.Order">
-    insert into lms_order (id, good_id, good_name, 
-      price, supOrRe, time, 
-      type)
-    values (#{id,jdbcType=INTEGER}, #{goodId,jdbcType=INTEGER}, #{goodName,jdbcType=VARCHAR}, 
-      #{price,jdbcType=DOUBLE}, #{suporre,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, 
-      #{type,jdbcType=INTEGER})
+    insert into lms_order (id, goodId, goodName, 
+      amount, price, supOrRe, 
+      time, type)
+    values (#{id,jdbcType=INTEGER}, #{goodId,jdbcType=INTEGER}, #{goodName,jdbcType=VARCHAR},
+      #{amount,jdbcType=INTEGER}, #{price,jdbcType=DOUBLE}, #{supOrRe,jdbcType=VARCHAR},
+      #{time,jdbcType=TIMESTAMP}, #{type,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.dt.lms.domain.Order">
     insert into lms_order
@@ -43,15 +44,18 @@
         id,
       </if>
       <if test="goodId != null">
-        good_id,
+        goodId,
       </if>
       <if test="goodName != null">
-        good_name,
+        goodName,
+      </if>
+      <if test="amount != null">
+        amount,
       </if>
       <if test="price != null">
         price,
       </if>
-      <if test="suporre != null">
+      <if test="supOrRe != null">
         supOrRe,
       </if>
       <if test="time != null">
@@ -71,11 +75,14 @@
       <if test="goodName != null">
         #{goodName,jdbcType=VARCHAR},
       </if>
+      <if test="amount != null">
+        #{amount,jdbcType=INTEGER},
+      </if>
       <if test="price != null">
         #{price,jdbcType=DOUBLE},
       </if>
-      <if test="suporre != null">
-        #{suporre,jdbcType=VARCHAR},
+      <if test="supOrRe != null">
+        #{supOrRe,jdbcType=VARCHAR},
       </if>
       <if test="time != null">
         #{time,jdbcType=TIMESTAMP},
@@ -89,16 +96,19 @@
     update lms_order
     <set>
       <if test="goodId != null">
-        good_id = #{goodId,jdbcType=INTEGER},
+        goodId = #{goodId,jdbcType=INTEGER},
       </if>
       <if test="goodName != null">
-        good_name = #{goodName,jdbcType=VARCHAR},
+        goodName = #{goodName,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=INTEGER},
       </if>
       <if test="price != null">
         price = #{price,jdbcType=DOUBLE},
       </if>
-      <if test="suporre != null">
-        supOrRe = #{suporre,jdbcType=VARCHAR},
+      <if test="supOrRe != null">
+        supOrRe = #{supOrRe,jdbcType=VARCHAR},
       </if>
       <if test="time != null">
         time = #{time,jdbcType=TIMESTAMP},
@@ -111,10 +121,11 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.dt.lms.domain.Order">
     update lms_order
-    set good_id = #{goodId,jdbcType=INTEGER},
-      good_name = #{goodName,jdbcType=VARCHAR},
+    set goodId = #{goodId,jdbcType=INTEGER},
+      goodName = #{goodName,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=INTEGER},
       price = #{price,jdbcType=DOUBLE},
-      supOrRe = #{suporre,jdbcType=VARCHAR},
+      supOrRe = #{supOrRe,jdbcType=VARCHAR},
       time = #{time,jdbcType=TIMESTAMP},
       type = #{type,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}

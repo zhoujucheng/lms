@@ -47,8 +47,9 @@ insert into supOrRe values(null,'re2','abc','1234','asdf',2);
 
 create table if not exists lms_order(
 id int auto_increment primary key,
-good_id int,
-good_name varchar(64),
+goodId int,
+goodName varchar(64),
+amount int,
 price double(16,2) not null,
 supOrRe varchar(64),
 time datetime not null,

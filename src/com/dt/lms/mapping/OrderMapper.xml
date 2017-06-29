@@ -3,11 +3,11 @@
 <mapper namespace="com.dt.lms.mapper.OrderMapper">
   <resultMap id="BaseResultMap" type="com.dt.lms.domain.Order">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="goodId" jdbcType="INTEGER" property="goodId" />
-    <result column="goodName" jdbcType="VARCHAR" property="goodName" />
+    <result column="goodId" jdbcType="INTEGER" property="goodid" />
+    <result column="goodName" jdbcType="VARCHAR" property="goodname" />
     <result column="amount" jdbcType="INTEGER" property="amount" />
     <result column="price" jdbcType="DOUBLE" property="price" />
-    <result column="supOrRe" jdbcType="VARCHAR" property="supOrRe" />
+    <result column="supOrRe" jdbcType="VARCHAR" property="suporre" />
     <result column="time" jdbcType="TIMESTAMP" property="time" />
     <result column="type" jdbcType="INTEGER" property="type" />
   </resultMap>
@@ -20,7 +20,7 @@
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
+    select 
     <include refid="Base_Column_List" />
     from lms_order
     where id = #{id,jdbcType=INTEGER}
@@ -33,8 +33,8 @@
     insert into lms_order (id, goodId, goodName, 
       amount, price, supOrRe, 
       time, type)
-    values (#{id,jdbcType=INTEGER}, #{goodId,jdbcType=INTEGER}, #{goodName,jdbcType=VARCHAR},
-      #{amount,jdbcType=INTEGER}, #{price,jdbcType=DOUBLE}, #{supOrRe,jdbcType=VARCHAR},
+    values (#{id,jdbcType=INTEGER}, #{goodid,jdbcType=INTEGER}, #{goodname,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=INTEGER}, #{price,jdbcType=DOUBLE}, #{suporre,jdbcType=VARCHAR}, 
       #{time,jdbcType=TIMESTAMP}, #{type,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.dt.lms.domain.Order">
@@ -43,10 +43,10 @@
       <if test="id != null">
         id,
       </if>
-      <if test="goodId != null">
+      <if test="goodid != null">
         goodId,
       </if>
-      <if test="goodName != null">
+      <if test="goodname != null">
         goodName,
       </if>
       <if test="amount != null">
@@ -55,7 +55,7 @@
       <if test="price != null">
         price,
       </if>
-      <if test="supOrRe != null">
+      <if test="suporre != null">
         supOrRe,
       </if>
       <if test="time != null">
@@ -69,11 +69,11 @@
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="goodId != null">
-        #{goodId,jdbcType=INTEGER},
+      <if test="goodid != null">
+        #{goodid,jdbcType=INTEGER},
       </if>
-      <if test="goodName != null">
-        #{goodName,jdbcType=VARCHAR},
+      <if test="goodname != null">
+        #{goodname,jdbcType=VARCHAR},
       </if>
       <if test="amount != null">
         #{amount,jdbcType=INTEGER},
@@ -81,8 +81,8 @@
       <if test="price != null">
         #{price,jdbcType=DOUBLE},
       </if>
-      <if test="supOrRe != null">
-        #{supOrRe,jdbcType=VARCHAR},
+      <if test="suporre != null">
+        #{suporre,jdbcType=VARCHAR},
       </if>
       <if test="time != null">
         #{time,jdbcType=TIMESTAMP},
@@ -95,11 +95,11 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.dt.lms.domain.Order">
     update lms_order
     <set>
-      <if test="goodId != null">
-        goodId = #{goodId,jdbcType=INTEGER},
+      <if test="goodid != null">
+        goodId = #{goodid,jdbcType=INTEGER},
       </if>
-      <if test="goodName != null">
-        goodName = #{goodName,jdbcType=VARCHAR},
+      <if test="goodname != null">
+        goodName = #{goodname,jdbcType=VARCHAR},
       </if>
       <if test="amount != null">
         amount = #{amount,jdbcType=INTEGER},
@@ -107,8 +107,8 @@
       <if test="price != null">
         price = #{price,jdbcType=DOUBLE},
       </if>
-      <if test="supOrRe != null">
-        supOrRe = #{supOrRe,jdbcType=VARCHAR},
+      <if test="suporre != null">
+        supOrRe = #{suporre,jdbcType=VARCHAR},
       </if>
       <if test="time != null">
         time = #{time,jdbcType=TIMESTAMP},
@@ -121,11 +121,11 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.dt.lms.domain.Order">
     update lms_order
-    set goodId = #{goodId,jdbcType=INTEGER},
-      goodName = #{goodName,jdbcType=VARCHAR},
+    set goodId = #{goodid,jdbcType=INTEGER},
+      goodName = #{goodname,jdbcType=VARCHAR},
       amount = #{amount,jdbcType=INTEGER},
       price = #{price,jdbcType=DOUBLE},
-      supOrRe = #{supOrRe,jdbcType=VARCHAR},
+      supOrRe = #{suporre,jdbcType=VARCHAR},
       time = #{time,jdbcType=TIMESTAMP},
       type = #{type,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}

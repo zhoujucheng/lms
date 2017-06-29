@@ -3,25 +3,29 @@ package com.dt.lms.domain;
 import java.util.Date;
 
 public class Order {
+
     private Integer id;
 
-    private Integer goodId;
+    private int goodId;
 
     private String goodName;
 
+    private int amount;
+
     private Double price;
 
-    private String suporre;
+    private String supOrRe;
 
     private Date time;
 
     private int type;
 
-    public Order(Integer goodId, String goodName, Double price, String suporre, Date time,int type) {
+    public Order(Integer goodId, String goodName,int amount, Double price, String supOrRe, Date time,int type) {
         this.goodId = goodId;
         this.goodName = goodName;
+        this.amount = amount;
         this.price = price;
-        this.suporre = suporre;
+        this.supOrRe = supOrRe;
         this.time = time;
         this.type = type;
     }
@@ -36,11 +40,11 @@ public class Order {
         this.id = id;
     }
 
-    public Integer getGoodId() {
+    public int getGoodId() {
         return goodId;
     }
 
-    public void setGoodId(Integer goodId) {
+    public void setGoodId(int goodId) {
         this.goodId = goodId;
     }
 
@@ -49,7 +53,15 @@ public class Order {
     }
 
     public void setGoodName(String goodName) {
-        this.goodName = goodName == null ? null : goodName.trim();
+        this.goodName = goodName;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     public Double getPrice() {
@@ -60,12 +72,12 @@ public class Order {
         this.price = price;
     }
 
-    public String getSuporre() {
-        return suporre;
+    public String getSupOrRe() {
+        return supOrRe;
     }
 
-    public void setSuporre(String suporre) {
-        this.suporre = suporre == null ? null : suporre.trim();
+    public void setSupOrRe(String supOrRe) {
+        this.supOrRe = supOrRe;
     }
 
     public Date getTime() {

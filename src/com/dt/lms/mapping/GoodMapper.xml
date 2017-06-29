@@ -12,19 +12,6 @@
   <sql id="Base_Column_List">
     id, name, amount, inPrice, outPrice, type
   </sql>
-
-  <insert id="addOrder" useGeneratedKeys="true" keyProperty="id" parameterType="com.dt.lms.domain.Order">
-    INSERT into lms_order VALUES (#{id},#{goodId},#{goodName},#{amount},#{price},#{supOrRe},#{time},#{type})
-  </insert>
-
-  <select id="findGoodByName" parameterType="java.lang.String"  resultType="com.dt.lms.domain.Good">
-    SELECT * FROM good WHERE name = #{name}
-  </select>
-
-  <select id="searchByName" parameterType="java.lang.String" resultType="com.dt.lms.domain.Good">
-    SELECT * FROM good WHERE name LIKE "%"#{name}"%"
-  </select>
-
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#idInquiry').click(function () {
+                var orderId = $('#orderId').val()
+                if (orderId === ''){
+                    alert('订单号不能为空')
+                }
+                $.ajax({
+                    type: 'GET',
+                    data: {id:orderId},
+                    url: 'order/orderInquiryById',
+                    success:function (data) {
+                        var table = $('#table')
+                        if (data === ''){
+                            table.html('无相关订单')
+                            return
+                        }
+                        var temp
+                        if (data.type === 1){
+                            temp = '供应商'
+                        }else {
+                            temp = '商家'
+                        }
+                        var trs = '<tr><th>订单号</th><th>商品编号</th><th>商品名称</th><th>商品数量</th><th>总价</th><th>'+temp+'</th><th>下单时间</th></tr><tr>'
+                        $.each(data,function (i,v) {
+                            if (i!=='type'){
+                                trs = trs + '<td>'+v+'</td>'
+                            }
+                        })
+                        trs = trs + '</tr>'
+                        table.html(trs)
+                    },error:function (e) {
+                        alert('查询失败')
+                    }
+                })
+            })
+            $('#dateInquiry').click(function () {
+                var date = $('#date').val()
+                if (date === ""){
+                    alert("请选择日期")
+                }else {
+                    var type = $('#type').val()
+                    $.ajax({
+                        type:'GET',
+                        data:{date:date,type:type},
+                        dataType:'text',
+                        url:'order/orderInquiryByDate',
+                        success:function (data) {
+                            var table = $('#table')
+                            if (data === '请先登录'){
+                                alert(data)
+                                return
+                            }
+                            if (data === '[]'){
+                                table.html('无相关订单')
+                                return
+                            }
+                            data = eval(data)
+                            var temp
+                            console.log(type)
+                            if (type === '1'){
+                                temp = '供应商'
+                            }else {
+                                temp = '商家'
+                            }
+                            console.log(temp)
+                            var trs = '<tr><th>订单号</th><th>商品编号</th><th>商品名称</th><th>商品数量</th><th>总价</th><th>'+temp+'</th><th>下单时间</th></tr><tr>'
+                            $.each(data,function (i,v) {
+                                trs = trs + '<tr>'
+                                $.each(v,function (j,w) {
+                                    if (j !== 'type'){
+                                        trs = trs + '<td>'+w+'</td>'
+                                    }
+                                })
+                                trs = trs + '</td>'
+                            })
+                            table.html(trs)
+                        },error:function (e) {
+                            alert('查询失败')
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+</head>
+<body>
+<div id="div" style="text-align:center;margin-top: 50px;">
+        <span>
+            订单类型:
+            <select id="type">
+                <option value=1>入库订单</option>
+                <option value=2>出库订单</option>
+            </select>
+        </span>
+    <span>
+        按订单日期查询：
+        <input id="date" type="date"/>
+        <button id="dateInquiry">查询</button>
+    </span>
+    <br>
+    <span>
+        按订单号查询：
+        <input id="orderId" type="text"/>
+        <button id="idInquiry">查询</button>
+    </span>
+    <table id="table" style="text-align: center;  margin:0 auto;border: solid 1px">
+    </table>
+</div>
+</body>
+</html>

@@ -29,18 +29,18 @@ public class SupOrReController {
     public String add(int number,String name,String address,String tel,String url){
         if (number < 0 || name == null || address == null || tel == null
                 || name.equals("") || address.equals("") || tel.equals("")){
-            return "输入有误";
+            return "添加失败，输入有误";
         }
         SupOrRe supOrRe = supOrReMapper.selectByPrimaryKey(number);
         if (supOrRe != null){
-            return "供应商编号已存在";
+            return "添加失败，供应商编号已存在";
         }else{
             supOrRe = new SupOrRe(number,name,tel,address,url,1);
             int status = supOrReMapper.insert(supOrRe);
             if (status == 1){
                 return "添加成功";
             }else {
-                return "添加失败";
+                return "添加失败，原因未知";
             }
         }
     }
