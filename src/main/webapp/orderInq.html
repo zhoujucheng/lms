@@ -20,6 +20,8 @@
                         if (data === ''){
                             table.html('无相关订单')
                             return
+                        }else if(data ==='请先登录'){
+                            alert(data)
                         }
                         var temp
                         if (data.type === 1){

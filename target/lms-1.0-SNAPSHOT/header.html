@@ -26,7 +26,7 @@
                         url:'user/logOut',
                         success:function (data) {
                             if(data){
-                                document.cookie=''
+                                document.cookie='name='+null
                                 top.location = 'login.html'
 							}
                         }

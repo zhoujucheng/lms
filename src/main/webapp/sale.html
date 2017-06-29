@@ -14,7 +14,8 @@
                 dataType:"text",
                 success:function (data,status) {
                     if(data === "请先登录"){
-                        top.location = "login.html";
+                        alert(data)
+                        return
                     }else {
                         alert(data);
                     }
