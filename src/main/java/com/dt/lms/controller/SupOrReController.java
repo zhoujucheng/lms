@@ -27,6 +27,7 @@ public class SupOrReController {
 
     @RequestMapping("/add")
     public String add(int number,String name,String address,String tel,String url){
+        Util.checkLogin();
         if (number < 0 || name == null || address == null || tel == null
                 || name.equals("") || address.equals("") || tel.equals("")){
             return "添加失败，输入有误";

@@ -14,8 +14,7 @@
                 dataType:"text",
                 success:function (data,status) {
                     if(data === "请先登录"){
-                        alert(data)
-                        return
+                        alert(data)                        return
                     }else {
                         alert(data);
                     }
@@ -60,8 +59,32 @@
         });
 
     </script>
+    <style type="text/css">
+        div{
+            margin:150px ;
+        }
+        input {
+            border:0.5px solid #27EEF9;
+            width:150px;
+            height:25px;
+            margin-left:0;
+        }
+        button {
+            width:100px;
+            height:30px;
+        }
+        button:hover {
+            width:100px;
+            height:30px;
+            background: #D4D8AF;
+            color:#F40E0E;
+            border-radius:10px;
+        }
+        
+    </style>
 </head>
 <body>
+<div>
     <table>
         <tr>
             <th>商品代号</th>
@@ -91,5 +114,6 @@
             <td><button id="good_name_out">出库</button> </td>
         </tr>
     </table>
+</div>
 </body>
 </html>

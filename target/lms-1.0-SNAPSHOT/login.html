@@ -10,21 +10,81 @@
     	body {
     		margin:0;
     		padding:0;
-    		background:#ECE7E7; 
+    		background:#6B5C6E; 
     	}
         .content {
-        	
+        	margin:200px auto;
         }
         table {
         	text-align: center;
-        	border:1px solid #6CF2E9;
         	margin:0 auto;
-        	margin-top: 300px;
-        	background:#BAD2CC;
         }
+        th {
+            font-weight: lighter;
+            font-size:18px;
+        }
+        input#userName {
+            border:0.5px solid #DCE0E0;
+            width:250px;
+            height:25px;
+            color:#FC0909;
+            font-weight: lighter;
+            font-size:18px;
+        }
+        input#userName:hover {
+            border:0.5px solid #DCE0E0;
+            width:250px;
+            height:25px;
+            color:#3B3A3A;
+            font-weight: lighter;
+            font-size:18px;
+            border-radius:12px;
+            background: #C9F5FB;
+        }
+        input#password {
+            border:0.5px solid #DCE0E0;
+            width:250px;
+            height:25px;
+            color:#FC0909;
+            font-weight: lighter;
+            font-size:18px;
+        }
+        input#password:hover {
+            border:0.5px solid #DCE0E0;
+            width:250px;
+            height:25px;
+            color:#3B3A3A;
+            font-weight: lighter;
+            font-size:18px;
+            border-radius:12px;
+            background: #C9F5FB;
+        }
+        input#login{
+            width:80px;
+            height: 24px;
+        }
+        input#login:hover {
+            height:28px;
+            color:#FA7979;
+            background: #FCEC1E;
+            font-size:15px;
+        }
+        input#res{
+            width:80px;
+            height: 24px;
+        }
+        input#res:hover {
+            height:28px;
+            color:#FA7979;
+            background: #FCEC1E;
+            font-size:15px;
+        }
+        
         h2 {
-        	text-align: center;
+            text-align: center;
+            font-weight: lighter;
         }
+        
     </style>
 <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript">
@@ -66,10 +126,11 @@ $(document).ready(function () {
 		<h2></h2>
 	</div>
 	<div class="content">
+    <h2>家乐福物流信息管理系统登录</h2>
 	    <form accept-charset="utf-8">
 	        <table>
 			    <tr>
-				    <td colspan="" rowspan="" headers=""><h2>家乐福物流信息管理系统登录</h2></td>
+				    <td colspan="" rowspan="" headers=""></td>
 			    </tr>
 			    <tr>
 			        <th colspan="" rowspan="" headers="" scope="">用户名：</th>
@@ -81,7 +142,7 @@ $(document).ready(function () {
 			    </tr>
 			    <tr>
 			        <th colspan="" rowspan="" headers="" scope=""><input type="button" value="登录" id="login"></th>
-			        <td colspan="" rowspan="" headers=""><input type="reset" value="重置"></td>
+			        <td colspan="" rowspan="" headers=""><input type="reset" value="重置" id="res"></td>
 			    </tr>
 		    </table>
 		 </form>

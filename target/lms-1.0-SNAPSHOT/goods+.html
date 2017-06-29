@@ -10,6 +10,7 @@
 			font-size:18px; 
 		} 
 		table{ 
+			text-align: center;
 			table-layout:fixed; 
 			empty-cells:show; 
 			border-collapse: collapse; 
@@ -32,6 +33,38 @@
 			font-family : 微软雅黑,宋体;
 			color:#F84848;
 		}
+		input {
+			width:150px;height:24px;
+		}
+		button {
+			width:100px;
+			height:30px;
+		}
+		button:hover {
+			width:100px;
+			height:30px;
+			background: #D4D8AF;
+			color:#F40E0E;
+			border-radius:10px;
+		}
+		select {
+            text-align: center;
+            height: 24px;
+            width:80px;
+            overflow: hidden;
+            border: none;
+            outline: none;
+            background: #eee;
+            border-radius: 10px;
+        }
+        option{
+            width: 150px;
+            height: 18px;
+            font-size: 18px;
+            display: inline-block;
+            border-radius: 5px;
+            padding-top: 10px;
+        }
 	</style>
     <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
 	<script type="text/javascript">
@@ -106,7 +139,7 @@
                 <tr>
                     <th>名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称</th>
 	    			<td><input type ="textarea" id="name" name="name" value="" /></td>
-	    			<td><p>*必须为文字</p></td>
+	    			<td><p>*请输入名称</p></td>
                 </tr>
                 <tr>
                     <th>数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量</th>
@@ -129,8 +162,7 @@
 	    			<td><p>*请输入供应商</p></td>
                 </tr>
 	    	    <tr>
-	    	        <td></td>
-	    			<td><button   id="btn1" >点击入库</button></td>
+	    			<td colspan="3"><button   id="btn1" >点击入库</button></td>
 	    		</tr>
 	    	</tbody>
 	    </table>

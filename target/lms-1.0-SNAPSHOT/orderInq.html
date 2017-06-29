@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>订单查询</title>
     <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -91,29 +91,98 @@
             })
         })
     </script>
+   <style type="text/css">
+        table{
+            width:800px;   
+            border:1px solid #000000; 
+            border-collapse:collapse;
+        }
+        tr,th,td{
+            border:1px solid #000000; 
+            border-collapse:collapse;
+        }
+        #inquiry {
+            width:100px;
+            height: 24px;
+        }
+        #inquiry:hover {
+            color:#FA7979;
+            background: 
+            #FCEC1E;
+            font-size:15px;
+        }
+        input {
+            width:150px;
+            color:#FF0505;
+            height:20px;
+        }
+        input#orderId{
+            width:320px;
+        }
+
+        span {
+           
+            color:#1EEFE9;
+            font-size:20px; 
+            font-weight:lighter;
+        }
+        select {
+            text-align: center;
+            height: 20px;
+            overflow: hidden;
+            border: none;
+            outline: none;
+            background: #eee;
+            border-radius: 10px;
+        }
+        option{
+            width: 150px;
+            height: 18px;
+            font-size: 18px;
+            display: inline-block;
+            border-radius: 5px;
+            padding-top: 10px;
+        }
+        button {
+            font-size:13px;
+            width:80px;
+            border-radius:0px;
+        }
+        button:hover {
+            color:#F622F0; 
+            background: #F2EB08;
+            font-size:13px;
+            width:80px;
+            border-radius:5px;
+        }
+   </style>
+    
 </head>
 <body>
-<div id="div" style="text-align:center;margin-top: 50px;">
+    <div id="div" style="text-align:center;margin-top: 50px;">
+        
+        
         <span>
+            按订单日期查询：
+            <input id="date" type="date"/>
+            <span>
             订单类型:
-            <select id="type">
-                <option value=1>入库订单</option>
-                <option value=2>出库订单</option>
-            </select>
+                <select id="type">
+                    <option value=1>入库订单</option>
+                    <option value=2>出库订单</option>
+                </select>
+            </span>
+            <button id="dateInquiry">查询</button>
         </span>
-    <span>
-        按订单日期查询：
-        <input id="date" type="date"/>
-        <button id="dateInquiry">查询</button>
-    </span>
-    <br>
-    <span>
-        按订单号查询：
-        <input id="orderId" type="text"/>
-        <button id="idInquiry">查询</button>
-    </span>
-    <table id="table" style="text-align: center;  margin:0 auto;border: solid 1px">
-    </table>
-</div>
+        <br>
+        <br>
+        <span>
+            按订单号查询&nbsp;&nbsp;&nbsp;：
+            <input id="orderId" type="text"/>
+            <button id="idInquiry">查询</button>
+        </span>
+        <table id="table" style="text-align: center;  margin:0 auto;border: solid 1px">
+        </table>
+    </div>
 </body>
 </html>

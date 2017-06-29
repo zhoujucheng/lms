@@ -16,10 +16,4 @@ public class Util {
         User user = (User)attr.getRequest().getSession().getAttribute(User.USER_ATTR_NAME);
         if (user == null)   throw new InfoException("请先登录");
     }
-
-    public static String defaultDateFormate(long time){
-        Date date = new Date(time);
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return format.format(date);
-    }
 }

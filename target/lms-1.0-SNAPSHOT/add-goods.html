@@ -15,7 +15,8 @@
 			border-collapse: collapse; 
 			margin:0 auto; 
 			border:1px solid #cad9ea; 
-			color:#666; 
+			color:#666;
+			text-align: center; 
 		} 
 		th {
 			background-repeat:repeat-x; 
@@ -30,6 +31,38 @@
 		p {
 			font-size: 15px;
 		}
+		input {
+			width:150px;height:24px;
+		}
+		button {
+			width:100px;
+			height:30px;
+		}
+		button:hover {
+			width:100px;
+			height:30px;
+			background: #D4D8AF;
+			color:#F40E0E;
+			border-radius:10px;
+		}
+		select {
+            text-align: center;
+            height: 24px;
+            width:80px;
+            overflow: hidden;
+            border: none;
+            outline: none;
+            background: #eee;
+            border-radius: 10px;
+        }
+        option{
+            width: 150px;
+            height: 18px;
+            font-size: 18px;
+            display: inline-block;
+            border-radius: 5px;
+            padding-top: 10px;
+        }
 	</style>
     <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
 	<script type="text/javascript">
@@ -88,11 +121,11 @@
                 </tr>
                 <tr>
                     <th>名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称</th>
-	    			<td><input type ="textarea" id="name" name="name" value="" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5]/g,''))"></td>
-	    			<td><p>*必须为文字</p></td>
+	    			<td><input type ="textarea" id="name" name="name" value=""></td>
+	    			<td>*请输入名称</td>
                 </tr>
                 <tr>
-                    <th>进价（元/个）</th>
+                    <th>进价估计(元/单位)</th>
 	    			<td><input type ="text" id="inprice" name="inprice" value="" ></td>
 	    			<td colspan="" rowspan="" headers=""  onkeyup="value=value.replace(/[^\d]/g,'') "onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"><p>*必须为数字</p></td>
                 </tr>
@@ -118,9 +151,8 @@
                 </tr>
 	    		
 	    	    <tr >
-	    	        <td ></td>
-	    			<td ><button   id="btn1" >点击录入</button></td>
-	    			<td></td>
+	    	        <td colspan="3"><button   id="btn1" >点击录入</button></td>
+	    			
 	    		</tr>
 	    	</tbody>
 	    </table>
